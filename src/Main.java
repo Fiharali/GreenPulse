@@ -1,3 +1,6 @@
+import entities.User;
+import services.UserManagement;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -33,11 +36,13 @@ public class Main {
                     break;
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
+
                     break;
             }
         }
 
         scanner.close();
+
     }
 
 
