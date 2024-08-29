@@ -1,20 +1,15 @@
 package entities;
 
-import java.util.*;
-
-import java.util.List;
-import java.util.ArrayList;
-
 
 public class User {
     private String name;
     private int age;
-    private String id;
+    private int id;
 
   // private list<Carbon> carbons;
 
 
-    public User(String name, int age, String id) {
+    public User(String name, int age, int id) {
         this.name = name;
         this.age = age;
         this.id = id;
@@ -38,11 +33,11 @@ public class User {
         this.age = age;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }
