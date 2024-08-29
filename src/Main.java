@@ -30,13 +30,18 @@ public class Main {
                 case '2':
                     UserManagement.displayUsers();
                     break;
-                case 3:
+                case '3':
+                    UserManagement.updateUser(scanner);
+                    break;
+                case '4':
+                    UserManagement.deleteUser(scanner);
+                    break;
+                case 7:
                     exit = true;
                     System.out.println("Merci d'avoir utilisé l'application !");
                     break;
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
-
                     break;
             }
         }

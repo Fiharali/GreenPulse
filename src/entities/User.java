@@ -1,11 +1,9 @@
 package entities;
 
-import java.util.Scanner;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Map;
+import java.util.*;
 
-import java.util.InputMismatchException;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class User {
@@ -13,11 +11,14 @@ public class User {
     private int age;
     private String id;
 
+  // private list<Carbon> carbons;
+
 
     public User(String name, int age, String id) {
         this.name = name;
         this.age = age;
         this.id = id;
+       // this.carbons = new ArrayList<>();
     }
 
 
