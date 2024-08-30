@@ -1,6 +1,11 @@
+import entities.Carbon;
 import entities.User;
+import services.CarbonManagement;
 import services.UserManagement;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,7 +22,7 @@ public class Main {
         boolean exit = false;
 
         while (!exit) {
-            // Display menu options
+
             System.out.println("\n=== Menu Principal ===");
             System.out.println("1. Afficher tous les utilisateurs");
             System.out.println("2. Créer un nouvel utilisateur");
@@ -41,6 +46,10 @@ public class Main {
                 case '4':
                     deleteUser();
                     break;
+                case '5':
+                    addCarbonToUser();
+                    break;
+
                 case '0':
                     exit = true;
                     System.out.println("Merci d'avoir utilisé l'application !");
@@ -131,6 +140,57 @@ public class Main {
 
 
         UserManagement.deleteUser(id);
+    }
+
+    public static void addCarbonToUser(){
+        System.out.print("Entrez l'identifiant de l'utilisateur : ");
+        String pass = scanner.nextLine().trim();
+        Integer userId = Integer.valueOf(scanner.nextLine().trim());
+
+        User user = users.get(userId);
+        if (user == null) {
+            System.out.println("Utilisateur non trouvé. Veuillez vérifier l'identifiant.");
+            return;
+        }
+
+        System.out.print("Entrez la quantité de carbone : ");
+        double quantity;
+        try {
+            quantity = Double.parseDouble(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Entrée invalide. Veuillez entrer un nombre pour la quantité.");
+            return;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate startDate;
+        LocalDate endDate;
+
+        while (true) {
+            try {
+                System.out.print("Entrez la date de début (format JJ/MM/AAAA) : ");
+                startDate = LocalDate.parse(scanner.nextLine().trim(), formatter);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Date de début invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Entrez la date de fin (format JJ/MM/AAAA) : ");
+                endDate = LocalDate.parse(scanner.nextLine().trim(), formatter);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Date de fin invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
+            }
+        }
+
+        Carbon newCarbon = new Carbon(quantity, startDate, endDate);
+
+        CarbonManagement.addConsumptionToUser(user,newCarbon);
+
+
     }
 
 

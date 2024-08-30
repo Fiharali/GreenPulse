@@ -1,19 +1,33 @@
 package entities;
 
+import java.util.List;
+import java.util.ArrayList;
 
 public class User {
+
+    private int id;
     private String name;
     private int age;
-    private int id;
 
-  // private list<Carbon> carbons;
+
+    private List<Carbon> carbons;
+
+
+    public List<Carbon> getCarbons() {
+        return carbons;
+    }
+
+    public void setCarbons(List<Carbon> carbons) {
+        this.carbons = carbons;
+    }
+
 
 
     public User(String name, int age, int id) {
         this.name = name;
         this.age = age;
         this.id = id;
-       // this.carbons = new ArrayList<>();
+       this.carbons = new ArrayList<>();
     }
 
 
@@ -39,5 +53,9 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void addCarbonEntry(Carbon carbon) {
+        this.carbons.add(carbon);
     }
 }
