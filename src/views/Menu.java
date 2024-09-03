@@ -1,7 +1,6 @@
 package views;
 
 import services.UserManagement;
-
 import java.util.Scanner;
 
 public class Menu {
@@ -10,7 +9,6 @@ public class Menu {
 
     public static void mainMenu(Scanner scanner) {
         boolean exit = false;
-
         while (!exit) {
 
             System.out.println("\n=== Menu Principal ===");
@@ -18,6 +16,7 @@ public class Menu {
             System.out.println("2. Créer un nouvel utilisateur");
             System.out.println("3. Modifier un  utilisateur");
             System.out.println("4. supprimée un utilisateur");
+            System.out.println("5. ajouter carbon pour un utilisateur");
             System.out.println("0. Quitter");
             System.out.print("Choisissez une option : ");
 
@@ -41,7 +40,7 @@ public class Menu {
                     break;
                 case '0':
                     exit = true;
-                    System.out.println("Merci d'avoir utilisé l'application !");
+                        System.out.println("Merci d'avoir utilisé l'application !");
                     break;
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");

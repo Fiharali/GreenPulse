@@ -10,7 +10,7 @@ import java.util.Scanner;
 import static services.UserManagement.users;
 
 public class Carbon {
-    public static void addCarbonToUser(Scanner scanner){
+    public  static void addCarbonToUser(Scanner scanner){
         System.out.print("Entrez l'identifiant de l'utilisateur : ");
         String pass = scanner.nextLine().trim();
         Integer userId = Integer.valueOf(scanner.nextLine().trim());
@@ -48,7 +48,11 @@ public class Carbon {
             try {
                 System.out.print("Entrez la date de fin (format JJ/MM/AAAA) : ");
                 endDate = LocalDate.parse(scanner.nextLine().trim(), formatter);
-                break;
+                if (endDate.isAfter(startDate)) {
+                    break;
+                } else {
+                    System.out.println("La date de fin doit être après la date de début. Veuillez entrer une date valide.");
+                }
             } catch (DateTimeParseException e) {
                 System.out.println("Date de fin invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
             }
@@ -60,4 +64,6 @@ public class Carbon {
 
 
     }
+
+
 }

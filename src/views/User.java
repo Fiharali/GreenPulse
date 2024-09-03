@@ -18,8 +18,7 @@ public class User {
         int id;
 
         while (true) {
-            System.out.print("Entrez un identifiant unique : ");
-            id = Integer.parseInt(scanner.nextLine());
+             id = Integer.parseInt(scanner.nextLine());
             if (!users.containsKey(id)) {
                 break;
             } else {

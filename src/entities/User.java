@@ -10,16 +10,14 @@ public class User {
     private int age;
 
 
-    private List<Carbon> carbons;
+    public static List<Carbon> carbons =  new ArrayList<>();
 
 
     public List<Carbon> getCarbons() {
         return carbons;
     }
 
-    public void setCarbons(List<Carbon> carbons) {
-        this.carbons = carbons;
-    }
+
 
 
 
@@ -27,7 +25,7 @@ public class User {
         this.name = name;
         this.age = age;
         this.id = id;
-       this.carbons = new ArrayList<>();
+     //  this.carbons = new ArrayList<>();
     }
 
 
@@ -55,7 +53,5 @@ public class User {
         this.id = id;
     }
 
-    public void addCarbonEntry(Carbon carbon) {
-        this.carbons.add(carbon);
-    }
+
 }
