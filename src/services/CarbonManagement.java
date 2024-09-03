@@ -10,7 +10,7 @@ import static entities.User.carbons;
 public class CarbonManagement {
 
 
-    public  static void addConsumptionToUser(User user, Carbon carbon) {
+    public   void addConsumptionToUser(User user, Carbon carbon) {
 
          // user.addCarbonEntry((Carbon) carbon);
 

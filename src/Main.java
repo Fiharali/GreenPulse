@@ -8,7 +8,8 @@ public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        Menu.mainMenu(scanner);
+        Menu menu = new Menu();
+        menu.mainMenu(scanner);
         scanner.close();
 
     }

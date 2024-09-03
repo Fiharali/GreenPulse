@@ -7,8 +7,8 @@ import static services.UserManagement.users;
 
 public class User {
 
-
-    public static void createUser(Scanner scanner){
+public UserManagement userManagement= new UserManagement();
+    public  void createUser(Scanner scanner){
         System.out.print("Entrez votre nom : ");
         String name = scanner.next();
 
@@ -25,12 +25,12 @@ public class User {
                 System.out.println("Cet identifiant est déjà utilisé. Veuillez en choisir un autre.");
             }
         }
-        UserManagement.createUser(id,name,age);
+        this.userManagement.createUser(id,name,age);
     }
 
 
 
-    public static void updateUser(Scanner scanner) {
+    public  void updateUser(Scanner scanner) {
         System.out.print("Entrez l'identifiant de l'utilisateur à mettre à jour : ");
         String pass = scanner.nextLine();
         int id = Integer.parseInt(scanner.nextLine());
@@ -54,7 +54,7 @@ public class User {
                 }
             }
 
-            UserManagement.UpdateUser(user, newName, newAge);
+            userManagement.UpdateUser(user, newName, newAge);
         } else {
             System.out.println("Utilisateur non trouvé.");
         }
@@ -62,7 +62,7 @@ public class User {
 
 
 
-    public static void deleteUser(Scanner scanner) {
+    public  void deleteUser(Scanner scanner) {
         System.out.print("Entrez l'identifiant de l'utilisateur à supprimer : ");
 
         String pass = scanner.nextLine().trim();
@@ -73,15 +73,15 @@ public class User {
             return;
         }
 
-        Integer id;
+        int id;
         try {
-            id = Integer.valueOf(idInput);
+            id = Integer.parseInt(idInput);
         } catch (NumberFormatException e) {
             System.out.println("Entrée invalide. Veuillez entrer un nombre entier pour l'identifiant.");
             return;
         }
 
 
-        UserManagement.deleteUser(id);
+        userManagement.deleteUser(id);
     }
 }

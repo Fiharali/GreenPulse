@@ -7,8 +7,12 @@ public class Menu {
 
 
 
-    public static void mainMenu(Scanner scanner) {
+    public  void mainMenu(Scanner scanner) {
         boolean exit = false;
+        User user = new User();
+        UserManagement userManagement = new UserManagement();
+        Carbon carbon = new Carbon();
+
         while (!exit) {
 
             System.out.println("\n=== Menu Principal ===");
@@ -24,19 +28,19 @@ public class Menu {
 
             switch (choice) {
                 case '2':
-                    User.createUser(scanner);
+                    user.createUser(scanner);
                     break;
                 case '1':
-                    UserManagement.displayUsers();
+                    userManagement.displayUsers();
                     break;
                 case '3':
-                    User.updateUser(scanner);
+                    user.updateUser(scanner);
                     break;
                 case '4':
-                    User.deleteUser(scanner);
+                    user.deleteUser(scanner);
                     break;
                 case '5':
-                    Carbon.addCarbonToUser(scanner);
+                    carbon.addCarbonToUser(scanner);
                     break;
                 case '0':
                     exit = true;

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class UserManagement {
     public static  Map<Integer, User> users = new HashMap<>();
-    public static void displayUsers() {
+    public  void displayUsers() {
         if (users.isEmpty()) {
             System.out.println("Aucun utilisateur enregistré.");
         } else {
@@ -37,46 +37,46 @@ public class UserManagement {
                         totalCarbon += carbon.getQuantity();
                     }
                     System.out.println("Total de consommation de carbone de  : " + user.getName() + " c'est " + totalCarbon + " g");
+                    System.out.println("-----------------------------");
+                    final double DAYS_IN_WEEK = 7.0;
+                    final double DAYS_IN_MONTH = 30.0;
+                    final double DAYS_IN_YEAR = 365.0;
+
+
+                    double averagePerDay = totalCarbon / totalDays;
+                    double averagePerWeek = averagePerDay * DAYS_IN_WEEK;
+                    double averagePerMonth = averagePerDay * DAYS_IN_MONTH;
+                    double averagePerYear = averagePerDay * DAYS_IN_YEAR;
+
+
+                    System.out.println("Moyenne de carbone par jour: " + averagePerDay + " g");
+                    System.out.println("Moyenne de carbone par semaine: " + averagePerWeek + " g");
+                    System.out.println("Moyenne de carbone par mois: " + averagePerMonth + " g");
+                    System.out.println("Moyenne de carbone par an: " + averagePerYear + " g");
                 }
-                System.out.println("-----------------------------");
-                final double DAYS_IN_WEEK = 7.0;
-                final double DAYS_IN_MONTH = 30.0;
-                final double DAYS_IN_YEAR = 365.0;
 
-
-                double averagePerDay = totalCarbon / totalDays;
-                double averagePerWeek = averagePerDay * DAYS_IN_WEEK;
-                double averagePerMonth = averagePerDay * DAYS_IN_MONTH;
-                double averagePerYear = averagePerDay * DAYS_IN_YEAR;
-
-
-                System.out.println("Moyenne de carbone par jour: " + averagePerDay + " g");
-                System.out.println("Moyenne de carbone par semaine: " + averagePerWeek + " g");
-                System.out.println("Moyenne de carbone par mois: " + averagePerMonth + " g");
-                System.out.println("Moyenne de carbone par an: " + averagePerYear + " g");
                 System.out.println("------------------------------------------------------------");
             }
         }
     }
 
-    public static void createUser(int id, String name , int age) {
+    public  void createUser(int id, String name , int age) {
         User newUser = new User(name, age, id);
         users.put(id, newUser);
         System.out.println("Compte créé avec succès !");
     }
 
-    public static void UpdateUser(User user, String newName, Integer newAge) {
+    public  void UpdateUser(User user, String newName, Integer newAge) {
         if (newName != null && !newName.isEmpty()) {
             user.setName(newName);
         }
         if (newAge != null) {
             user.setAge(newAge);
         }
-
         System.out.println("Utilisateur mis à jour avec succès !");
     }
 
-    public static void deleteUser(Integer id) {
+    public  void deleteUser(Integer id) {
         User removedUser = users.remove(id);
         if (removedUser != null) {
             System.out.println("Utilisateur supprimé avec succès !");

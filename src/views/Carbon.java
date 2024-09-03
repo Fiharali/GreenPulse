@@ -10,7 +10,7 @@ import java.util.Scanner;
 import static services.UserManagement.users;
 
 public class Carbon {
-    public  static void addCarbonToUser(Scanner scanner){
+    public   void addCarbonToUser(Scanner scanner){
         System.out.print("Entrez l'identifiant de l'utilisateur : ");
         String pass = scanner.nextLine().trim();
         Integer userId = Integer.valueOf(scanner.nextLine().trim());
@@ -59,8 +59,8 @@ public class Carbon {
         }
 
         entities.Carbon newCarbon = new entities.Carbon(quantity, startDate, endDate);
-
-        CarbonManagement.addConsumptionToUser(user,newCarbon);
+        CarbonManagement carbonManagement = new CarbonManagement();
+        carbonManagement.addConsumptionToUser(user,newCarbon);
 
 
     }
