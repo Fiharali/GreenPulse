@@ -4,6 +4,7 @@ import entities.User;
 import services.CarbonManagement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -69,7 +70,7 @@ public class Carbon {
 
     }
 
-    public   void showRapport(Scanner scanner){
+    public   void showRapport(Scanner scanner) {
 
         System.out.print("Entrez l'identifiant de l'utilisateur : ");
         String pass = scanner.nextLine().trim();
@@ -94,41 +95,39 @@ public class Carbon {
             }
         }
 
-        User Uuser=new User();
+        // User Uuser=new User();
         List<entities.Carbon> carbons = user.getCarbons();
         double totalCarbon = 0;
         long totalDays = 0;
         boolean found = false;
-        double averageForDay=0;
-        for (entities.Carbon carbon : carbons) {
-            if ((carbon.getStartDate().equals(date) || carbon.getEndDate().equals(date)) ||
-                    (carbon.getStartDate().isBefore(date) && carbon.getEndDate().isAfter(date))) {
-                 totalCarbon = carbon.getQuantity();
-                 totalDays = ChronoUnit.DAYS.between(carbon.getStartDate(), carbon.getEndDate()) + 1;
-                 double avg = totalCarbon / totalDays;
-                 averageForDay += avg;
-                 found = true;
-            }
-        }
-
-
+        double averageForDay = 0;
         LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-
-        double totalCarbonForDay = 0.0;
         double totalCarbonForWeek = 0.0;
-        boolean dayFound = false;
         boolean weekFound = false;
+        YearMonth yearMonth = YearMonth.from(date);
+        LocalDate startOfMonth = yearMonth.atDay(1);
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+        double totalCarbonForMonth = 0.0;
+        boolean monthFound = false;
 
+        for (entities.Carbon carbon : carbons) {
 
-        for (entities.Carbon carbon : user.getCarbons()) {
+            if ((carbon.getStartDate().equals(date) || carbon.getEndDate().equals(date)) ||
+                    (carbon.getStartDate().isBefore(date) && carbon.getEndDate().isAfter(date))) {
+                totalCarbon = carbon.getQuantity();
+                totalDays = ChronoUnit.DAYS.between(carbon.getStartDate(), carbon.getEndDate()) + 1;
+                double avg = totalCarbon / totalDays;
+                averageForDay += avg;
+                found = true;
+            }
+
+//---------------------------------------------------------------------------
+
             LocalDate carbonStart = carbon.getStartDate();
             LocalDate carbonEnd = carbon.getEndDate();
-
-
             if ((carbonStart.isBefore(endOfWeek) && carbonEnd.isAfter(startOfWeek)) ||
                     carbonStart.equals(startOfWeek) || carbonEnd.equals(endOfWeek)) {
-
 
                 LocalDate overlapStart = carbonStart.isBefore(startOfWeek) ? startOfWeek : carbonStart;
                 LocalDate overlapEnd = carbonEnd.isAfter(endOfWeek) ? endOfWeek : carbonEnd;
@@ -143,20 +142,48 @@ public class Carbon {
                 totalCarbonForWeek += avgCarbonPerDay * daysInPeriod;
                 weekFound = true;
             }
-        }
 
+//---------------------------------------------------------------------------
+
+
+            if ((carbonStart.isBefore(endOfMonth) && carbonEnd.isAfter(startOfMonth)) ||
+                    carbonStart.equals(startOfMonth) || carbonEnd.equals(endOfMonth)) {
+
+
+                LocalDate overlapStart = carbonStart.isBefore(startOfMonth) ? startOfMonth : carbonStart;
+                LocalDate overlapEnd = carbonEnd.isAfter(endOfMonth) ? endOfMonth : carbonEnd;
+
+
+                long daysInPeriod = ChronoUnit.DAYS.between(overlapStart, overlapEnd) + 1;
+
+
+                double avgCarbonPerDay = carbon.getQuantity() /
+                        (ChronoUnit.DAYS.between(carbonStart, carbonEnd) + 1);
+
+                totalCarbonForMonth += avgCarbonPerDay * daysInPeriod;
+                monthFound = true;
+            }
+
+        }
 
 
         if (!found) {
             System.out.println("Aucune consommation de carbone enregistrée pour cette date.");
-        }else {
-            System.out.println("le consomation  de carbone par pour le  " + date +" c'est "+ averageForDay + " g");
+        } else {
+            System.out.println("le consomation  de carbone par pour le  " + date + " c'est " + averageForDay + " g");
         }
         if (weekFound) {
             System.out.println("La consommation totale de carbone pour la semaine du " +
                     startOfWeek + " au " + endOfWeek + " est de " + totalCarbonForWeek + " g.");
         } else {
             System.out.println("Aucune consommation de carbone enregistrée pour cette semaine.");
+        }
+
+        if (monthFound) {
+            System.out.println("La consommation totale de carbone pour le mois de " +
+                    yearMonth.getMonth() + " " + yearMonth.getYear() + " est de " + totalCarbonForMonth + " g.");
+        } else {
+            System.out.println("Aucune consommation de carbone enregistrée pour ce mois.");
         }
 
     }
