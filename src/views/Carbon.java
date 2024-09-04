@@ -1,11 +1,15 @@
 package views;
 
+import entities.User;
 import services.CarbonManagement;
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Scanner;
+import java.time.temporal.TemporalAdjusters;
 
 import static services.UserManagement.users;
 
@@ -62,6 +66,98 @@ public class Carbon {
         CarbonManagement carbonManagement = new CarbonManagement();
         carbonManagement.addConsumptionToUser(user,newCarbon);
 
+
+    }
+
+    public   void showRapport(Scanner scanner){
+
+        System.out.print("Entrez l'identifiant de l'utilisateur : ");
+        String pass = scanner.nextLine().trim();
+        Integer userId = Integer.valueOf(scanner.nextLine().trim());
+
+        entities.User user = users.get(userId);
+        if (user == null) {
+            System.out.println("Utilisateur non trouvé. Veuillez vérifier l'identifiant.");
+            return;
+        }
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date;
+        while (true) {
+            try {
+                System.out.print("Entrez la date spécifique (format JJ/MM/AAAA) : ");
+                date = LocalDate.parse(scanner.nextLine().trim(), formatter);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Date invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
+            }
+        }
+
+        User Uuser=new User();
+        List<entities.Carbon> carbons = user.getCarbons();
+        double totalCarbon = 0;
+        long totalDays = 0;
+        boolean found = false;
+        double averageForDay=0;
+        for (entities.Carbon carbon : carbons) {
+            if ((carbon.getStartDate().equals(date) || carbon.getEndDate().equals(date)) ||
+                    (carbon.getStartDate().isBefore(date) && carbon.getEndDate().isAfter(date))) {
+                 totalCarbon = carbon.getQuantity();
+                 totalDays = ChronoUnit.DAYS.between(carbon.getStartDate(), carbon.getEndDate()) + 1;
+                 double avg = totalCarbon / totalDays;
+                 averageForDay += avg;
+                 found = true;
+            }
+        }
+
+
+        LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        double totalCarbonForDay = 0.0;
+        double totalCarbonForWeek = 0.0;
+        boolean dayFound = false;
+        boolean weekFound = false;
+
+
+        for (entities.Carbon carbon : user.getCarbons()) {
+            LocalDate carbonStart = carbon.getStartDate();
+            LocalDate carbonEnd = carbon.getEndDate();
+
+
+            if ((carbonStart.isBefore(endOfWeek) && carbonEnd.isAfter(startOfWeek)) ||
+                    carbonStart.equals(startOfWeek) || carbonEnd.equals(endOfWeek)) {
+
+
+                LocalDate overlapStart = carbonStart.isBefore(startOfWeek) ? startOfWeek : carbonStart;
+                LocalDate overlapEnd = carbonEnd.isAfter(endOfWeek) ? endOfWeek : carbonEnd;
+
+
+                long daysInPeriod = ChronoUnit.DAYS.between(overlapStart, overlapEnd) + 1;
+
+                double avgCarbonPerDay = carbon.getQuantity() /
+                        (ChronoUnit.DAYS.between(carbonStart, carbonEnd) + 1);
+
+
+                totalCarbonForWeek += avgCarbonPerDay * daysInPeriod;
+                weekFound = true;
+            }
+        }
+
+
+
+        if (!found) {
+            System.out.println("Aucune consommation de carbone enregistrée pour cette date.");
+        }else {
+            System.out.println("le consomation  de carbone par pour le  " + date +" c'est "+ averageForDay + " g");
+        }
+        if (weekFound) {
+            System.out.println("La consommation totale de carbone pour la semaine du " +
+                    startOfWeek + " au " + endOfWeek + " est de " + totalCarbonForWeek + " g.");
+        } else {
+            System.out.println("Aucune consommation de carbone enregistrée pour cette semaine.");
+        }
 
     }
 

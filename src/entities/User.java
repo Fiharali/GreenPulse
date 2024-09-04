@@ -20,7 +20,9 @@ public class User {
 
 
 
+    public User() {
 
+    }
     public User(String name, int age, int id) {
         this.name = name;
         this.age = age;
