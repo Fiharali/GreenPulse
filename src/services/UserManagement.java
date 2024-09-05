@@ -2,14 +2,18 @@ package services;
 
 import entities.Carbon;
 import entities.User;
+import repository.UserRepository;
+
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserManagement {
+public class UserManagement implements UserRepository {
     public static  Map<Integer, User> users = new HashMap<>();
+    @Override
     public  void displayUsers() {
+        
         if (users.isEmpty()) {
             System.out.println("Aucun utilisateur enregistré.");
         } else {
@@ -59,13 +63,13 @@ public class UserManagement {
             }
         }
     }
-
+    @Override
     public  void createUser(int id, String name , int age) {
         User newUser = new User(name, age, id);
         users.put(id, newUser);
         System.out.println("Compte créé avec succès !");
     }
-
+    @Override
     public  void UpdateUser(User user, String newName, Integer newAge) {
         if (newName != null && !newName.isEmpty()) {
             user.setName(newName);
@@ -75,7 +79,7 @@ public class UserManagement {
         }
         System.out.println("Utilisateur mis à jour avec succès !");
     }
-
+    @Override
     public  void deleteUser(Integer id) {
         User removedUser = users.remove(id);
         if (removedUser != null) {

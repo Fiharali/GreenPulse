@@ -2,18 +2,14 @@ package services;
 
 import entities.Carbon;
 import entities.User;
-
-import java.util.List;
+import repository.CarbonRepository;
 
 import static entities.User.carbons;
 
-public class CarbonManagement {
+public class CarbonManagement  implements CarbonRepository {
 
-
+    @Override
     public   void addConsumptionToUser(User user, Carbon carbon) {
-
-         // user.addCarbonEntry((Carbon) carbon);
-
         carbons.add(carbon);
     }
 }

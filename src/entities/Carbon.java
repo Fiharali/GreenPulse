@@ -41,6 +41,8 @@ public class Carbon {
         this.endDate = endDate;
     }
 
-
+    public double calculerImpact() {
+        return quantity;
+    }
 
 }

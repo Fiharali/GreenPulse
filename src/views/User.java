@@ -18,6 +18,7 @@ public UserManagement userManagement= new UserManagement();
         int id;
 
         while (true) {
+            System.out.print("Entrez votre unique ID : ");
              id = Integer.parseInt(scanner.nextLine());
             if (!users.containsKey(id)) {
                 break;
