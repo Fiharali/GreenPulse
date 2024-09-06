@@ -1,6 +1,10 @@
 package views;
 
+import Config.DBConnection;
 import services.UserManagement;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
@@ -18,9 +22,10 @@ public class Menu {
             System.out.println("\n=== Menu Principal ===");
             System.out.println("1. Afficher tous les utilisateurs");
             System.out.println("2. Créer un nouvel utilisateur");
-            System.out.println("3. Modifier un  utilisateur");
+            System.out.println("3. Afficher un seul  utilisateur");
             System.out.println("4. supprimée un utilisateur");
-            System.out.println("5. ajouter carbon pour un utilisateur");
+            System.out.println("5. modifier   un utilisateur");
+            System.out.println("----------------------------------------------------------");
             System.out.println("6. generate Rapport d'un utilisateur");
             System.out.println("0. Quitter");
             System.out.print("Choisissez une option : ");
@@ -32,16 +37,16 @@ public class Menu {
                     user.createUser(scanner);
                     break;
                 case '1':
-                    userManagement.displayUsers();
+                    user.displayUsers();
                     break;
                 case '3':
-                    user.updateUser(scanner);
+                    user.getUserById(scanner);
                     break;
                 case '4':
                     user.deleteUser(scanner);
                     break;
                 case '5':
-                    carbon.addCarbonToUser(scanner);
+                    user.updateUser(scanner);
                     break;
                 case '6':
                     carbon.showRapport(scanner);

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.time.temporal.TemporalAdjusters;
 
-import static services.UserManagement.users;
+//import static services.UserManagement.users;
 
 public class Carbon {
     public   void addCarbonToUser(Scanner scanner){
@@ -20,11 +20,7 @@ public class Carbon {
         String pass = scanner.nextLine().trim();
         Integer userId = Integer.valueOf(scanner.nextLine().trim());
 
-        entities.User user = users.get(userId);
-        if (user == null) {
-            System.out.println("Utilisateur non trouvé. Veuillez vérifier l'identifiant.");
-            return;
-        }
+        entities.User user = new User();
 
         System.out.print("Entrez la quantité de carbone : ");
         double quantity;
@@ -76,11 +72,8 @@ public class Carbon {
         String pass = scanner.nextLine().trim();
         Integer userId = Integer.valueOf(scanner.nextLine().trim());
 
-        entities.User user = users.get(userId);
-        if (user == null) {
-            System.out.println("Utilisateur non trouvé. Veuillez vérifier l'identifiant.");
-            return;
-        }
+        entities.User user = new User();
+
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
