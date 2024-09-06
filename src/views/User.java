@@ -1,6 +1,7 @@
 package views;
 
 import services.UserManagement;
+import utils.InputUtils;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -32,27 +33,15 @@ public UserManagement userManagement= new UserManagement();
     public  void createUser(Scanner scanner){
         System.out.print("Entrez votre nom : ");
         String name = scanner.next();
-        boolean validAge = false;
-        int age = 0;
-        while (!validAge) {
-            System.out.print("Entrez votre âge : ");
-            try {
-                age = scanner.nextInt();
-                validAge = true; 
-            } catch (InputMismatchException e) {
-                System.out.println("Erreur : L'âge doit être un nombre entier.");
-                scanner.next(); 
-            }
-        }
-        scanner.nextLine();
+        int age = InputUtils.readInt("Entrez votre âge : ");
         userManagement.createUser(name ,age);
     }
 
 
     public void getUserById(Scanner scanner){
-        System.out.print("Entrez user id  : ");
-        int id = scanner.nextInt();
-       entities.User user = userManagement.getUserById(id);
+
+        int id = InputUtils.readInt("Entrez user id  : ");
+        entities.User user = userManagement.getUserById(id);
         if (user == null) {
             System.out.println("No user found with this id .");
         } else {
@@ -66,37 +55,18 @@ public UserManagement userManagement= new UserManagement();
     }
 
     public  void updateUser(Scanner scanner) {
-        System.out.print("Entrez l'identifiant de l'utilisateur à mettre à jour : ");
-        String pass = scanner.nextLine();
-        int id = Integer.parseInt(scanner.nextLine());
+
+        int id = InputUtils.readInt("Entrez l'identifiant de l'utilisateur à mettre à jour : ");
         System.out.print("Entrez un nouveau nom : ");
+        String pass = scanner.nextLine();
         String newName = scanner.nextLine();
-        System.out.print("Entrez un nouveau âge : ");
-        int newAge = scanner.nextInt();
+        int newAge = InputUtils.readInt("Entrez un nouveau âge : ");
 
         userManagement.UpdateUser(id, newName, newAge);
     }
 
     public  void deleteUser(Scanner scanner) {
-        System.out.print("Entrez l'identifiant de l'utilisateur à supprimer : ");
-
-        String pass = scanner.nextLine().trim();
-        String idInput = scanner.nextLine();
-        if (idInput.isEmpty()) {
-            System.out.println("Entrée invalide. L'identifiant ne peut pas être vide.");
-            return;
-        }
-
-        int id;
-        try {
-            id = Integer.parseInt(idInput);
-            userManagement.deleteUser(id);
-        } catch (NumberFormatException e) {
-            System.out.println("Entrée invalide. Veuillez entrer un nombre entier pour l'identifiant.");
-            return;
-        }
-
-
+        int id = InputUtils.readInt("Entrez l'identifiant de l'utilisateur à supprimer : ");
         userManagement.deleteUser(id);
     }
 }

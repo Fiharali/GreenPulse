@@ -35,7 +35,7 @@ public class UserManagement  {
         if (userRepository.destroy(id) && getUserById(id) != null) {
             System.out.println("user a été supprimé avec succès  ");
         }else{
-            System.out.println("L'utilisateur n'a pas été supprimé ou n'existe pas.");
+            System.out.println("L'utilisateur  n'existe pas.");
         }
 
     }
