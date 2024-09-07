@@ -49,7 +49,7 @@ public class Menu {
                     user.updateUser(scanner);
                     break;
                 case '6':
-                    carbon.showRapport(scanner);
+                    carbon.choiceCarbonType(scanner);
                     break;
                 case '0':
                     exit = true;

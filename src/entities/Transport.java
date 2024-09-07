@@ -1,17 +1,27 @@
 package entities;
 
+
+import entities.enums.TypeCarbon;
+
 import java.time.LocalDate;
 
 public class Transport extends Carbon {
+    private double distanceParcourue;
     private String typeDeVehicule;
-    private Integer distanceParcourue;
 
-    public Transport(double quantity, LocalDate startDate, LocalDate endDate, String typeDeVehicule, Integer distanceParcourue) {
-        super(quantity, startDate, endDate);
-        this.typeDeVehicule = typeDeVehicule;
+    public Transport(double quantity, LocalDate startDate, LocalDate endDate, double distanceParcourue, String typeDeVehicule) {
+        super(quantity, startDate, endDate, TypeCarbon.TRANSPORT);
         this.distanceParcourue = distanceParcourue;
+        this.typeDeVehicule = typeDeVehicule;
     }
 
+    public double getDistanceParcourue() {
+        return distanceParcourue;
+    }
+
+    public void setDistanceParcourue(double distanceParcourue) {
+        this.distanceParcourue = distanceParcourue;
+    }
 
     public String getTypeDeVehicule() {
         return typeDeVehicule;
@@ -21,13 +31,9 @@ public class Transport extends Carbon {
         this.typeDeVehicule = typeDeVehicule;
     }
 
-    public Integer getDistanceParcourue() {
-        return distanceParcourue;
+    @Override
+    public double calculerImpact() {
+        double impactFactor = typeDeVehicule.equalsIgnoreCase("voiture") ? 0.5 : 0.1;
+        return distanceParcourue * impactFactor;
     }
-
-    public void setDistanceParcourue(Integer distanceParcourue) {
-        this.distanceParcourue = distanceParcourue;
-    }
-
-
 }

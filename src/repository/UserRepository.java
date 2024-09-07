@@ -33,7 +33,6 @@ public class UserRepository {
                 String name = rs.getString("name");
                 int age = rs.getInt("age");
                 User user = new User(id ,name, age);
-              //  user.setId(id);
                 users.add(user);
             }
             return users;

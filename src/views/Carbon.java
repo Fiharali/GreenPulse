@@ -1,7 +1,10 @@
 package views;
 
 import entities.User;
+import entities.enums.TypeCarbon;
 import services.CarbonManagement;
+import utils.InputUtils;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -15,56 +18,86 @@ import java.time.temporal.TemporalAdjusters;
 //import static services.UserManagement.users;
 
 public class Carbon {
-    public   void addCarbonToUser(Scanner scanner){
-        System.out.print("Entrez l'identifiant de l'utilisateur : ");
-        String pass = scanner.nextLine().trim();
-        Integer userId = Integer.valueOf(scanner.nextLine().trim());
+    public  void addCarbonWithTransport(Scanner scanner){
 
-        entities.User user = new User();
-
-        System.out.print("Entrez la quantité de carbone : ");
-        double quantity;
-        try {
-            quantity = Double.parseDouble(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Entrée invalide. Veuillez entrer un nombre pour la quantité.");
-            return;
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate startDate;
         LocalDate endDate;
 
-        while (true) {
-            try {
-                System.out.print("Entrez la date de début (format JJ/MM/AAAA) : ");
-                startDate = LocalDate.parse(scanner.nextLine().trim(), formatter);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Date de début invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
-            }
-        }
-
-        while (true) {
-            try {
-                System.out.print("Entrez la date de fin (format JJ/MM/AAAA) : ");
-                endDate = LocalDate.parse(scanner.nextLine().trim(), formatter);
-                if (endDate.isAfter(startDate)) {
-                    break;
-                } else {
-                    System.out.println("La date de fin doit être après la date de début. Veuillez entrer une date valide.");
-                }
-            } catch (DateTimeParseException e) {
-                System.out.println("Date de fin invalide. Veuillez entrer une date au format JJ/MM/AAAA.");
-            }
-        }
-
-        entities.Carbon newCarbon = new entities.Carbon(quantity, startDate, endDate);
+        String pass = scanner.nextLine();
+        int userId = InputUtils.readInt("Entrez l'identifiant de l'utilisateur : ");
+        double quantity = InputUtils.readDouble("Entrez la quantité de carbone :");
+        startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
+        endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
+        int distance = InputUtils.readInt("Entrez la distance  : ");
+        String vehiculeType = choiceVehiculeType();
         CarbonManagement carbonManagement = new CarbonManagement();
-        carbonManagement.addConsumptionToUser(user,newCarbon);
-
+        carbonManagement.createTransport(quantity,startDate,endDate,distance, vehiculeType ,userId);
 
     }
+
+
+
+    public void choiceCarbonType(Scanner scanner) {
+        int choice = 0;
+
+        while (choice < 1 || choice > 3) {
+            System.out.println(" ------------------------------------------------ ");
+            System.out.println(" 1 : pour ajouter de type TRANSPORT ");
+            System.out.println(" 2 : pour ajouter de type LOGEMENT ");
+            System.out.println(" 3 : pour ajouter de type ALIMENTATION ");
+            System.out.println(" ------------------------------------------------ ");
+
+            choice = InputUtils.readInt("Choisissez votre type :");
+
+            switch (choice) {
+                case 1:
+                    addCarbonWithTransport(scanner);
+                    break;
+                case 2:
+                    addCarbonWithTransport(scanner);
+                    break;
+                case 3:
+                    addCarbonWithTransport(scanner);
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir 1, 2 ou 3.");
+                    break;
+            }
+        }
+    }
+
+
+
+
+
+    public String choiceVehiculeType() {
+        int choice = 0;
+        String typeDeVehicule = "";
+
+        while (choice < 1 || choice > 2) {
+            System.out.println(" ------------------------------------------------ ");
+            System.out.println(" 1 : type de Vehicule voiture ");
+            System.out.println(" 2 : type de Vehicule train ");
+            System.out.println(" ------------------------------------------------ ");
+
+            choice = InputUtils.readInt("Choisissez le type de véhicule :");
+
+            switch (choice) {
+                case 1:
+                    typeDeVehicule = "voiture";
+                    break;
+                case 2:
+                    typeDeVehicule = "train";
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir 1 ou 2.");
+                    break;
+            }
+        }
+
+        return typeDeVehicule;
+    }
+
 
     public   void showRapport(Scanner scanner) {
 

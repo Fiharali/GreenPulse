@@ -1,20 +1,24 @@
 package entities;
 
+import entities.enums.TypeCarbon;
+
 import java.time.LocalDate;
 
-public class Carbon {
+public abstract  class Carbon {
 
-    private double quantity;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    protected double quantity;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
+    public TypeCarbon type;
 
-    public Carbon(double quantity, LocalDate startDate, LocalDate endDate) {
+
+
+    public Carbon(double quantity, LocalDate startDate, LocalDate endDate, TypeCarbon type) {
         this.quantity = quantity;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.type = type;
     }
-
-
 
 
     public double getQuantity() {
@@ -41,8 +45,6 @@ public class Carbon {
         this.endDate = endDate;
     }
 
-    public double calculerImpact() {
-        return quantity;
-    }
+    public abstract double calculerImpact();
 
 }
