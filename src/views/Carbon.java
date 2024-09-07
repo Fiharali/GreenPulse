@@ -29,7 +29,7 @@ public class Carbon {
         startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
         endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
         int distance = InputUtils.readInt("Entrez la distance  : ");
-        String vehiculeType = choiceVehiculeType();
+        String vehiculeType = choiceVehiculeOrEnergieOrAlimentType("voiture","train","Vehicule");
         CarbonManagement carbonManagement = new CarbonManagement();
         carbonManagement.createTransport(quantity,startDate,endDate,distance, vehiculeType ,userId);
 
@@ -70,24 +70,24 @@ public class Carbon {
 
 
 
-    public String choiceVehiculeType() {
+    public String choiceVehiculeOrEnergieOrAlimentType(String ch1 ,String ch2 , String ch3) {
         int choice = 0;
         String typeDeVehicule = "";
 
         while (choice < 1 || choice > 2) {
             System.out.println(" ------------------------------------------------ ");
-            System.out.println(" 1 : type de Vehicule voiture ");
-            System.out.println(" 2 : type de Vehicule train ");
+            System.out.println(" 1 : type de "+ch3+" "+ch1);
+            System.out.println(" 1 : type de "+ch3+" "+ch2);
             System.out.println(" ------------------------------------------------ ");
 
             choice = InputUtils.readInt("Choisissez le type de véhicule :");
 
             switch (choice) {
                 case 1:
-                    typeDeVehicule = "voiture";
+                    typeDeVehicule = ch1;
                     break;
                 case 2:
-                    typeDeVehicule = "train";
+                    typeDeVehicule = ch2;
                     break;
                 default:
                     System.out.println("Choix non valide. Veuillez choisir 1 ou 2.");
