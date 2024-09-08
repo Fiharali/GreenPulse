@@ -14,7 +14,6 @@ public class Menu {
     public  void mainMenu(Scanner scanner) {
         boolean exit = false;
         User user = new User();
-        UserManagement userManagement = new UserManagement();
         Carbon carbon = new Carbon();
 
         while (!exit) {

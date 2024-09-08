@@ -1,21 +1,20 @@
 package services;
 
-import entities.Carbon;
+import entities.Alimentation;
+import entities.Logement;
 import entities.Transport;
-import entities.User;
-import repository.CarbonRepository;
+import repository.AlimentationRepository;
+import repository.LogementRepository;
 import repository.TransportRepository;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static entities.User.carbons;
-
 public class CarbonManagement  {
 
     private final TransportRepository transportRepository = new TransportRepository();
-    //private final LogementRepository logementRepository = new LogementRepository();
-    //private final AlimentationRepository alimentationRepository = new AlimentationRepository();
+    private final LogementRepository logementRepository = new LogementRepository();
+    private final AlimentationRepository alimentationRepository = new AlimentationRepository();
 
 
 
@@ -24,6 +23,29 @@ public class CarbonManagement  {
         Transport transport = new Transport(quantity, startDate, endDate, distanceParcourue, typeDeVehicule);
         try {
             transportRepository.insertTransport(transport, userId);
+            System.out.println("Transport carbon consumption created successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void createLogement(double quantity, LocalDate startDate, LocalDate endDate, double consommationEnergie, String typeDeEnergie, int userId) {
+        Logement logement = new Logement(quantity, startDate, endDate, consommationEnergie, typeDeEnergie);
+        try {
+            logementRepository.insertLogement(logement, userId);
+            System.out.println("Transport carbon consumption created successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void createAliment(double quantity, LocalDate startDate, LocalDate endDate, double poids, String typeDeAliment, int userId) {
+        Alimentation alimentation = new Alimentation(quantity, startDate, endDate, typeDeAliment, poids);
+        try {
+            alimentationRepository.insertAlimentation(alimentation, userId);
             System.out.println("Transport carbon consumption created successfully!");
         } catch (SQLException e) {
             e.printStackTrace();

@@ -18,66 +18,18 @@ import java.time.temporal.TemporalAdjusters;
 //import static services.UserManagement.users;
 
 public class Carbon {
-    public  void addCarbonWithTransport(Scanner scanner){
-
-        LocalDate startDate;
-        LocalDate endDate;
-
-        String pass = scanner.nextLine();
-        int userId = InputUtils.readInt("Entrez l'identifiant de l'utilisateur : ");
-        double quantity = InputUtils.readDouble("Entrez la quantité de carbone :");
-        startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
-        endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
-        int distance = InputUtils.readInt("Entrez la distance  : ");
-        String vehiculeType = choiceVehiculeOrEnergieOrAlimentType("voiture","train","Vehicule");
-        CarbonManagement carbonManagement = new CarbonManagement();
-        carbonManagement.createTransport(quantity,startDate,endDate,distance, vehiculeType ,userId);
-
-    }
-
-
-
-    public void choiceCarbonType(Scanner scanner) {
-        int choice = 0;
-
-        while (choice < 1 || choice > 3) {
-            System.out.println(" ------------------------------------------------ ");
-            System.out.println(" 1 : pour ajouter de type TRANSPORT ");
-            System.out.println(" 2 : pour ajouter de type LOGEMENT ");
-            System.out.println(" 3 : pour ajouter de type ALIMENTATION ");
-            System.out.println(" ------------------------------------------------ ");
-
-            choice = InputUtils.readInt("Choisissez votre type :");
-
-            switch (choice) {
-                case 1:
-                    addCarbonWithTransport(scanner);
-                    break;
-                case 2:
-                    addCarbonWithTransport(scanner);
-                    break;
-                case 3:
-                    addCarbonWithTransport(scanner);
-                    break;
-                default:
-                    System.out.println("Choix non valide. Veuillez choisir 1, 2 ou 3.");
-                    break;
-            }
-        }
-    }
 
 
 
 
-
-    public String choiceVehiculeOrEnergieOrAlimentType(String ch1 ,String ch2 , String ch3) {
+    private String choiceVehiculeOrEnergieOrAlimentType(String ch1 ,String ch2 , String carbonType) {
         int choice = 0;
         String typeDeVehicule = "";
 
         while (choice < 1 || choice > 2) {
             System.out.println(" ------------------------------------------------ ");
-            System.out.println(" 1 : type de "+ch3+" "+ch1);
-            System.out.println(" 1 : type de "+ch3+" "+ch2);
+            System.out.println(" 1 : type de "+carbonType+" "+ch1);
+            System.out.println(" 2 : type de "+carbonType+" "+ch2);
             System.out.println(" ------------------------------------------------ ");
 
             choice = InputUtils.readInt("Choisissez le type de véhicule :");
@@ -97,6 +49,94 @@ public class Carbon {
 
         return typeDeVehicule;
     }
+    public void choiceCarbonType(Scanner scanner) {
+        int choice = 0;
+
+        while (choice < 1 || choice > 3) {
+            System.out.println(" ------------------------------------------------ ");
+            System.out.println(" 1 : pour ajouter de type TRANSPORT ");
+            System.out.println(" 2 : pour ajouter de type LOGEMENT ");
+            System.out.println(" 3 : pour ajouter de type ALIMENTATION ");
+            System.out.println(" ------------------------------------------------ ");
+
+            choice = InputUtils.readInt("Choisissez votre type :");
+
+            switch (choice) {
+                case 1:
+                    addCarbonWithTransport(scanner);
+                    break;
+                case 2:
+                    addCarbonWithLogement(scanner);
+                    break;
+                case 3:
+                    addCarbonWithAlimentation(scanner);
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir 1, 2 ou 3.");
+                    break;
+            }
+        }
+    }
+    public  void addCarbonWithTransport(Scanner scanner){
+
+        LocalDate startDate;
+        LocalDate endDate;
+
+        String pass = scanner.nextLine();
+        int userId = InputUtils.readInt("Entrez l'identifiant de l'utilisateur : ");
+        double quantity = InputUtils.readDouble("Entrez la quantité de carbone :");
+        startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
+        endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
+        int distance = InputUtils.readInt("Entrez la distance  : ");
+        String vehiculeType = choiceVehiculeOrEnergieOrAlimentType("voiture","train","Vehicule");
+        CarbonManagement carbonManagement = new CarbonManagement();
+        carbonManagement.createTransport(quantity,startDate,endDate,distance, vehiculeType ,userId);
+
+    }
+
+    public  void addCarbonWithLogement(Scanner scanner){
+
+        LocalDate startDate;
+        LocalDate endDate;
+
+        String pass = scanner.nextLine();
+        int userId = InputUtils.readInt("Entrez l'identifiant de l'utilisateur : ");
+        double quantity = InputUtils.readDouble("Entrez la quantité de carbone :");
+        startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
+        endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
+        int consommationEnergie = InputUtils.readInt("Entrez la consomation  : ");
+        String energieType = choiceVehiculeOrEnergieOrAlimentType("electricité","gaz","Energie");
+        CarbonManagement carbonManagement = new CarbonManagement();
+        carbonManagement.createLogement(quantity,startDate,endDate,consommationEnergie, energieType ,userId);
+
+    }
+
+    public  void addCarbonWithAlimentation(Scanner scanner){
+
+        LocalDate startDate;
+        LocalDate endDate;
+
+        String pass = scanner.nextLine();
+        int userId = InputUtils.readInt("Entrez l'identifiant de l'utilisateur : ");
+        double quantity = InputUtils.readDouble("Entrez la quantité de carbone :");
+        startDate = InputUtils.readDate("Entrez la date de debut (format JJ/MM/AAAA) : ");
+        endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
+        int poids = InputUtils.readInt("Entrez la poids  : ");
+        String alimentType = choiceVehiculeOrEnergieOrAlimentType("viande ","Legume ","alimentation");
+        CarbonManagement carbonManagement = new CarbonManagement();
+        carbonManagement.createAliment(quantity,startDate,endDate,poids, alimentType ,userId);
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     public   void showRapport(Scanner scanner) {
