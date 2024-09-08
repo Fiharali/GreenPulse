@@ -17,8 +17,6 @@ public class CarbonManagement  {
     private final AlimentationRepository alimentationRepository = new AlimentationRepository();
 
 
-
-
     public void createTransport(double quantity, LocalDate startDate, LocalDate endDate, double distanceParcourue, String typeDeVehicule, int userId) {
         Transport transport = new Transport(quantity, startDate, endDate, distanceParcourue, typeDeVehicule);
         try {
