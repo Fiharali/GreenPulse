@@ -33,7 +33,9 @@ public class User {
         return carbons;
     }
 
-
+    public void addCarbon(Carbon carbon) {
+        carbons.add(carbon);
+    }
 
 
     public User() {

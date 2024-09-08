@@ -5,6 +5,15 @@ import entities.enums.TypeCarbon;
 import java.time.LocalDate;
 
 public abstract  class Carbon {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     protected double quantity;
     protected LocalDate startDate;
