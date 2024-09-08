@@ -21,7 +21,7 @@ CREATE TABLE transports (
                             carbon_id INT,
                             distance_parcourue float NOT NULL,
                             type_de_vehicule VARCHAR(255) NOT NULL,
-                            FOREIGN KEY (carbon_id) REFERENCES carbons(id)
+                            FOREIGN KEY (carbon_id) REFERENCES carbons(id) ON DELETE CASCADE
 );
 
 CREATE TABLE logements (
@@ -29,7 +29,7 @@ CREATE TABLE logements (
                            carbon_id INT,
                            consommation_energie float NOT NULL,
                            type_energie VARCHAR(255) NOT NULL,
-                           FOREIGN KEY (carbon_id) REFERENCES carbons(id)
+                           FOREIGN KEY (carbon_id) REFERENCES carbons(id) ON DELETE CASCADE
 );
 
 
@@ -38,5 +38,7 @@ CREATE TABLE alimentations (
                                carbon_id INT,
                                type_aliment VARCHAR(255) NOT NULL,
                                poids float NOT NULL,
-                               FOREIGN KEY (carbon_id) REFERENCES carbons(id)
+                               FOREIGN KEY (carbon_id) REFERENCES carbons(id) ON DELETE CASCADE
 );
+
+

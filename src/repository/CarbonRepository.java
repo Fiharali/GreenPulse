@@ -37,4 +37,19 @@ public class CarbonRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean destroy( int carbonId)  {
+        boolean carbonDeleted=false;
+        String deleteSQL = "delete from carbons where id =? ";
+        try {
+            Connection cnx = DBConnection.getInstance().getConnection();
+            PreparedStatement stmt = cnx.prepareStatement(deleteSQL);
+            stmt.setDouble(1, carbonId);
+            stmt.executeUpdate();
+            carbonDeleted=true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return carbonDeleted;
+    }
 }

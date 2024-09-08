@@ -20,7 +20,7 @@ import java.time.temporal.TemporalAdjusters;
 public class Carbon {
 
 
-
+    CarbonManagement carbonManagement = new CarbonManagement();
 
     private String choiceVehiculeOrEnergieOrAlimentType(String ch1 ,String ch2 , String carbonType) {
         int choice = 0;
@@ -89,7 +89,7 @@ public class Carbon {
         endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
         int distance = InputUtils.readInt("Entrez la distance  : ");
         String vehiculeType = choiceVehiculeOrEnergieOrAlimentType("voiture","train","Vehicule");
-        CarbonManagement carbonManagement = new CarbonManagement();
+
         carbonManagement.createTransport(quantity,startDate,endDate,distance, vehiculeType ,userId);
 
     }
@@ -106,7 +106,6 @@ public class Carbon {
         endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
         int consommationEnergie = InputUtils.readInt("Entrez la consomation  : ");
         String energieType = choiceVehiculeOrEnergieOrAlimentType("electricité","gaz","Energie");
-        CarbonManagement carbonManagement = new CarbonManagement();
         carbonManagement.createLogement(quantity,startDate,endDate,consommationEnergie, energieType ,userId);
 
     }
@@ -123,8 +122,13 @@ public class Carbon {
         endDate =  InputUtils.readEndDateAfterStart("Entrez la date de fin (format JJ/MM/AAAA) : ", startDate);
         int poids = InputUtils.readInt("Entrez la poids  : ");
         String alimentType = choiceVehiculeOrEnergieOrAlimentType("viande ","Legume ","alimentation");
-        CarbonManagement carbonManagement = new CarbonManagement();
         carbonManagement.createAliment(quantity,startDate,endDate,poids, alimentType ,userId);
+
+    }
+
+    public  void deleteCarbon(Scanner scanner){
+        int carbonId = InputUtils.readInt("Entrez l'id de carbon : ");
+        carbonManagement.delete(carbonId);
 
     }
 

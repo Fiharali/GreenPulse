@@ -4,6 +4,7 @@ import entities.Alimentation;
 import entities.Logement;
 import entities.Transport;
 import repository.AlimentationRepository;
+import repository.CarbonRepository;
 import repository.LogementRepository;
 import repository.TransportRepository;
 
@@ -15,6 +16,7 @@ public class CarbonManagement  {
     private final TransportRepository transportRepository = new TransportRepository();
     private final LogementRepository logementRepository = new LogementRepository();
     private final AlimentationRepository alimentationRepository = new AlimentationRepository();
+    private final CarbonRepository carbonRepository = new CarbonRepository();
 
 
     public void createTransport(double quantity, LocalDate startDate, LocalDate endDate, double distanceParcourue, String typeDeVehicule, int userId) {
@@ -48,6 +50,16 @@ public class CarbonManagement  {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void delete(int carbonId){
+
+        if (carbonRepository.destroy(carbonId)) {
+            System.out.println("user a été supprimé avec succès  ");
+        }else{
+            System.out.println("L'utilisateur  n'existe pas.");
+        }
+
     }
 
 }
