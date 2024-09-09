@@ -19,44 +19,41 @@ public UserManagement userManagement= new UserManagement();
 
     public void displayUsers() {
         List<entities.User> users = userManagement.getAllUsers();
+        System.out.println(users.get(1).getCarbons());
+
+
         if (users.isEmpty()) {
             System.out.println("No users found.");
         } else {
             System.out.println("Users List:");
-            for (entities.User user : users) {
-               int  lastUserId =0 ;
+            int lastUserId = -1;
 
-                if (lastUserId!=(user.getAge())) {
+            for (entities.User user : users) {
+                if (lastUserId != user.getId()) {
                     System.out.println("----------------------------------------------------------");
-                    System.out.printf("User ID: %d | Name: %s | Age: %d\n", user.getAge(), user.getName(), user.getAge());
+                    System.out.printf("User ID: %d | Name: %s | Age: %d\n", user.getId(), user.getName(), user.getAge());
                     System.out.println("----------------------------------------------------------");
-                    lastUserId = user.getAge();
+                    lastUserId = user.getId();
                 }
 
                 for (Carbon carbon : user.getCarbons()) {
                     String type = "";
-
                     System.out.printf("Carbon ID: %d | Quantity: %.2f | Start Date: %s | End Date: %s | Type: %s\n",
                             carbon.getId(), carbon.getQuantity(), carbon.getStartDate(), carbon.getEndDate(), type);
 
                     if (carbon instanceof Alimentation) {
-
                         Alimentation alim = (Alimentation) carbon;
                         type = "ALIMENTATION";
                         String typeAlimentation = alim.getTypeAliment();
                         double poids = alim.getPoids();
                         System.out.printf("Alimentation: Type Aliment: %s | Poids: %.2f\n", typeAlimentation, poids);
-
                     } else if (carbon instanceof Logement) {
-
                         Logement log = (Logement) carbon;
                         type = "LOGEMENT";
                         double consommationEnergie = log.getConsommationEnergie();
                         String typeEnergie = log.getTypeEnergie();
                         System.out.printf("Logement: Consommation Energie: %.2f | Type Energie: %s\n", consommationEnergie, typeEnergie);
-
                     } else if (carbon instanceof Transport) {
-
                         Transport trans = (Transport) carbon;
                         type = "TRANSPORT";
                         double distance = trans.getDistanceParcourue();
@@ -64,14 +61,11 @@ public UserManagement userManagement= new UserManagement();
                         System.out.printf("Transport: Distance Parcourue: %.2f | Type de Vehicule: %s\n", distance, typeVehicule);
                     }
                     System.out.println("----------------------------------------------------------");
-
                 }
-                System.out.println("----------------------------------------------------------");
-                System.out.println("----------------------------------------------------------");
-                System.out.println("----------------------------------------------------------");
             }
         }
     }
+
 
 
     public  void createUser(Scanner scanner){

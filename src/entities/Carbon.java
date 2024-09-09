@@ -30,6 +30,16 @@ public abstract  class Carbon {
     }
 
 
+
+    public Carbon(int id , double quantity, LocalDate startDate, LocalDate endDate, TypeCarbon type) {
+        this.id = id;
+        this.quantity = quantity;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.type = type;
+    }
+
+
     public double getQuantity() {
         return quantity;
     }
@@ -55,5 +65,14 @@ public abstract  class Carbon {
     }
 
     public abstract double calculerImpact();
+
+    @Override
+    public String toString() {
+        return "Carbon ID: " + this.id +
+                ", Quantity: " + this.quantity +
+                ", Start Date: " + this.startDate +
+                ", End Date: " + this.endDate;
+    }
+
 
 }

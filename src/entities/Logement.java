@@ -25,8 +25,13 @@ public class Logement extends Carbon {
         this.typeEnergie = typeEnergie;
     }
 
-    public Logement(double quantity, LocalDate startDate, LocalDate endDate, double consommationEnergie, String typeEnergie) {
-        super(quantity, startDate, endDate, TypeCarbon.LOGEMENT);
+    public Logement( double quantity, LocalDate startDate, LocalDate endDate, double consommationEnergie, String typeEnergie) {
+        super( quantity, startDate, endDate, TypeCarbon.LOGEMENT);
+        this.consommationEnergie = consommationEnergie;
+        this.typeEnergie = typeEnergie;
+    }
+    public Logement(int id , double quantity, LocalDate startDate, LocalDate endDate, double consommationEnergie, String typeEnergie) {
+        super(id , quantity, startDate, endDate, TypeCarbon.LOGEMENT);
         this.consommationEnergie = consommationEnergie;
         this.typeEnergie = typeEnergie;
     }
@@ -35,5 +40,15 @@ public class Logement extends Carbon {
     public double calculerImpact() {
         double impactFactor = typeEnergie.equalsIgnoreCase("électricité") ? 1.5 : 2.0;
         return consommationEnergie * impactFactor;
+    }
+
+
+    public String toString() {
+        return "Transport [ID: " + this.getId() +
+                ", Quantity: " + this.quantity +
+                ", Start Date: " + this.startDate +
+                ", End Date: " + this.endDate +
+                ",consommation : " + this.consommationEnergie +
+                ", Type de energie : " + this.typeEnergie + "]";
     }
 }

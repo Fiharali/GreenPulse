@@ -68,5 +68,13 @@ public class User {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", carbons =" + this.getCarbons() +
+                '}';
+    }
 }

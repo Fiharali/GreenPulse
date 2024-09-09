@@ -21,61 +21,68 @@ public class UserRepository {
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
-    public List<User> all() {
+//    public List<User> all() {
+//
+//        List<User> users = new ArrayList<>();
+//
+//        try {
+//            conn = DBConnection.getInstance().getConnection();
+//
+//            String selectSQL = "SELECT u.id, u.name, u.age, c.id AS carbon_id, c.quantity, c.start_date, c.end_date, " +
+//                    "       c.type AS carbon_type, a.type_aliment, a.poids, " +
+//                    "       l.consommation_energie, l.type_energie, " +
+//                    "       t.distance_parcourue, t.type_de_vehicule " +
+//                    "FROM users u " +
+//                    "LEFT JOIN carbons c ON u.id = c.user_id " +
+//                    "LEFT JOIN alimentations a ON c.id = a.carbon_id " +
+//                    "LEFT JOIN logements l ON c.id = l.carbon_id " +
+//                    "LEFT JOIN transports t ON c.id = t.carbon_id";
+//            stmt = conn.prepareStatement(selectSQL);
+//            rs = stmt.executeQuery();
+//
+//            while (rs.next()) {
+//                int userId = rs.getInt("id");
+//                String userName = rs.getString("name");
+//                int userAge = rs.getInt("age");
+//                User user = findOrCreateUser(users, userId, userName, userAge);
+//                int carbonId = rs.getInt("carbon_id");
+//
+//
+//
+//                double quantity = rs.getDouble("quantity");
+//                LocalDate startDate = rs.getDate("start_date").toLocalDate();
+//                LocalDate endDate = rs.getDate("end_date").toLocalDate();
+//                String carbonType = rs.getString("carbon_type");
+//
+//                if ("ALIMENTATION".equals(carbonType)) {
+//
+//                    String typeAliment = rs.getString("type_aliment");
+//                    double poids = rs.getDouble("poids");
+//                    user.addCarbon(new Alimentation(carbonId,quantity, startDate, endDate, typeAliment, poids));
+//                    System.out.println("ALIMENTATION");
+//                } else if ("LOGEMENT".equals(carbonType)) {
+//
+//                    double consommationEnergie = rs.getDouble("consommation_energie");
+//                    String typeEnergie = rs.getString("type_energie");
+//                    user.addCarbon(new Logement(carbonId ,quantity, startDate, endDate, consommationEnergie, typeEnergie));
+//                    System.out.println("LOGEMENT");
+//
+//                } else if ("TRANSPORT".equals(carbonType)) {
+//
+//                    double distanceParcourue = rs.getDouble("distance_parcourue");
+//                    String typeVehicule = rs.getString("type_de_vehicule");
+//                    user.addCarbon(new Transport(carbonId ,quantity, startDate, endDate, distanceParcourue, typeVehicule));
+//                    System.out.println("LOGEMENT");
+//                }
+//
+//            }
+//            return users;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        List<User> users = new ArrayList<>();
 
-        try {
-            conn = DBConnection.getInstance().getConnection();
-
-            String selectSQL = "SELECT u.id, u.name, u.age, c.id AS carbon_id, c.quantity, c.start_date, c.end_date, " +
-                    "       c.type AS carbon_type, a.type_aliment, a.poids, " +
-                    "       l.consommation_energie, l.type_energie, " +
-                    "       t.distance_parcourue, t.type_de_vehicule " +
-                    "FROM users u " +
-                    "LEFT JOIN carbons c ON u.id = c.user_id " +
-                    "LEFT JOIN alimentations a ON c.id = a.carbon_id " +
-                    "LEFT JOIN logements l ON c.id = l.carbon_id " +
-                    "LEFT JOIN transports t ON c.id = t.carbon_id";
-            stmt = conn.prepareStatement(selectSQL);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int userId = rs.getInt("id");
-                String userName = rs.getString("name");
-                int userAge = rs.getInt("age");
-                User user = findOrCreateUser(users, userId, userName, userAge);
-                Integer carbonId = rs.getInt("carbon_id");
-
-                if (rs.wasNull()) {
-                    continue;
-                }
-
-                double quantity = rs.getDouble("quantity");
-                LocalDate startDate = rs.getDate("start_date").toLocalDate();
-                LocalDate endDate = rs.getDate("end_date").toLocalDate();
-                String carbonType = rs.getString("carbon_type");
-
-                if ("ALIMENTATION".equals(carbonType)) {
-                    String typeAliment = rs.getString("type_aliment");
-                    double poids = rs.getDouble("poids");
-                    user.addCarbon(new Alimentation(quantity, startDate, endDate, typeAliment, poids));
-                } else if ("LOGEMENT".equals(carbonType)) {
-                    double consommationEnergie = rs.getDouble("consommation_energie");
-                    String typeEnergie = rs.getString("type_energie");
-                    user.addCarbon(new Logement(quantity, startDate, endDate, consommationEnergie, typeEnergie));
-                } else if ("TRANSPORT".equals(carbonType)) {
-                    double distanceParcourue = rs.getDouble("distance_parcourue");
-                    String typeVehicule = rs.getString("type_de_vehicule");
-                    user.addCarbon(new Transport(quantity, startDate, endDate, distanceParcourue, typeVehicule));
-                }
-
-            }
-            return users;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
     private User findOrCreateUser(List<User> users, int id, String name, int age) {
@@ -84,6 +91,7 @@ public class UserRepository {
                 return user;
             }
         }
+
         User newUser = new User(id, name, age);
         users.add(newUser);
         return newUser;
