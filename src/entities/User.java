@@ -32,6 +32,11 @@ public class User {
     public List<Carbon> getCarbons() {
         return carbons;
     }
+    public boolean hasCarbon(int carbonId) {
+        return carbons.stream().anyMatch(c -> c.getId() == carbonId);
+    }
+
+
 
     public void addCarbon(Carbon carbon) {
         carbons.add(carbon);

@@ -3,6 +3,7 @@ package services;
 import entities.Alimentation;
 import entities.Logement;
 import entities.Transport;
+import entities.User;
 import repository.AlimentationRepository;
 import repository.CarbonRepository;
 import repository.LogementRepository;
@@ -10,6 +11,7 @@ import repository.TransportRepository;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class CarbonManagement  {
 
@@ -59,6 +61,12 @@ public class CarbonManagement  {
         }else{
             System.out.println("L'utilisateur  n'existe pas.");
         }
+
+    }
+
+
+    public Optional<User> getCarbonByUserId(int id) {
+        return carbonRepository.find(id);
 
     }
 

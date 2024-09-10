@@ -9,6 +9,7 @@ import utils.InputUtils;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 //import static services.UserManagement.users;
 
@@ -40,7 +41,6 @@ public UserManagement userManagement= new UserManagement();
                     String type = "";
                     System.out.printf("Carbon ID: %d | Quantity: %.2f | Start Date: %s | End Date: %s | Type: %s\n",
                             carbon.getId(), carbon.getQuantity(), carbon.getStartDate(), carbon.getEndDate(), type);
-
                     if (carbon instanceof Alimentation) {
                         Alimentation alim = (Alimentation) carbon;
                         type = "ALIMENTATION";
@@ -79,14 +79,14 @@ public UserManagement userManagement= new UserManagement();
     public void getUserById(Scanner scanner){
 
         int id = InputUtils.readInt("Entrez user id  : ");
-        entities.User user = userManagement.getUserById(id);
-        if (user == null) {
+        Optional<entities.User> user = userManagement.getUserById(id);
+        if (user.isEmpty()) {
             System.out.println("No user found with this id .");
         } else {
             System.out.println("----------------------------------------------------------");
-            System.out.println("ID: " + user.getId());
-            System.out.println("Name: " + user.getName());
-            System.out.println("Age: " + user.getAge());
+            System.out.println("ID: " + user.get().getId());
+            System.out.println("Name: " + user.get().getName());
+            System.out.println("Age: " + user.get().getAge());
             System.out.println("----------------------------------------------------------");
 
         }

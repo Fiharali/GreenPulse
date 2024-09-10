@@ -27,6 +27,7 @@ public class Menu {
             System.out.println("----------------------------------------------------------");
             System.out.println("6. Ajouter Carbon Consommation");
             System.out.println("7. supprimée Carbon Consommation");
+            System.out.println("8. Afficher un utilisateur ses Consommation");
             System.out.println("0. Quitter");
             System.out.print("Choisissez une option : ");
 
@@ -53,6 +54,9 @@ public class Menu {
                     break;
                 case '7':
                     carbon.deleteCarbon(scanner);
+                    break;
+                case '8':
+                    carbon.getUserWithCarbon(scanner);
                     break;
                 case '0':
                     exit = true;

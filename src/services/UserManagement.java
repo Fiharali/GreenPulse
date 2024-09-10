@@ -1,14 +1,10 @@
 package services;
 
-import Config.DBConnection;
 import entities.User;
 import repository.UserRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public class UserManagement  {
 
@@ -20,12 +16,12 @@ public class UserManagement  {
     }
 
     public  void createUser( String name , int age) {
-            userRepository.create(name,age);
-            System.out.println("Compte créé avec succès !");
+           if( userRepository.create(name,age))
+                System.out.println("Compte créé avec succès !");
     }
 
 
-    public  User getUserById( int id) {
+    public Optional<User> getUserById(int id) {
        return userRepository.find(id);
 
     }
