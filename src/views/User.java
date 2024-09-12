@@ -9,6 +9,7 @@ import utils.InputUtils;
 
 //import java.util.InputMismatchException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -25,6 +26,13 @@ public UserManagement userManagement= new UserManagement();
 
         String ANSI_RESET = "\u001B[0m";
         String ANSI_RED = "\u001B[31m";
+
+        users.sort(Comparator.comparingDouble((entities.User user) ->
+                user.getCarbons().stream()
+                        .mapToDouble(Carbon::calculerImpact)
+                        .sum()
+        ).reversed());
+
 
         if (users.isEmpty()) {
             System.out.println("No users found.");
