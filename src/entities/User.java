@@ -9,9 +9,8 @@ public class User {
     private int id;
     private String name;
     private int age;
+    public  List<Carbon> carbons =  new ArrayList<>();
 
-
-    public static List<Carbon> carbons =  new ArrayList<>();
 
     public User(String name, int age) {
         this.name = name;

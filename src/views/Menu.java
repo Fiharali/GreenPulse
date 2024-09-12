@@ -2,6 +2,7 @@ package views;
 
 import Config.DBConnection;
 import services.UserManagement;
+import utils.InputUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,37 +29,51 @@ public class Menu {
             System.out.println("6. Ajouter Carbon Consommation");
             System.out.println("7. supprimée Carbon Consommation");
             System.out.println("8. Afficher un utilisateur ses Consommation");
+            System.out.println("9.  filtrer les utilisateurs en fonction de la consommation totale");
+            System.out.println("10. Calculer la consommation moyenne de carbone par utilisateur pour une période donnée. ");
+            System.out.println("11. Identifier les utilisateurs n'ayant pas enregistré de consommation de carbone pendant une période spécifiée.. ");
             System.out.println("0. Quitter");
             System.out.print("Choisissez une option : ");
 
-            char choice = scanner.next().charAt(0);
+
+            int choice = InputUtils.readInt("Choisissez une option :");
 
             switch (choice) {
-                case '2':
-                    user.createUser(scanner);
-                    break;
-                case '1':
+
+                case 1:
                     user.displayUsers();
                     break;
-                case '3':
+                case 2:
+                    user.createUser(scanner);
+                    break;
+                case 3:
                     user.getUserById(scanner);
                     break;
-                case '4':
+                case 4:
                     user.deleteUser(scanner);
                     break;
-                case '5':
+                case 5:
                     user.updateUser(scanner);
                     break;
-                case '6':
+                case 6:
                     carbon.choiceCarbonType(scanner);
                     break;
-                case '7':
+                case 7:
                     carbon.deleteCarbon(scanner);
                     break;
-                case '8':
+                case 8:
                     carbon.getUserWithCarbon(scanner);
                     break;
-                case '0':
+                case 9:
+                    carbon.filterUsersByCarbon(scanner);
+                    break;
+                case 10:
+                    user.moyenneWithPeriod(scanner);
+                    break;
+                case 11:
+                    user.detectInactiveUsers(scanner);
+                    break;
+                case 0:
                     exit = true;
                         System.out.println("Merci d'avoir utilisé l'application !");
                     break;

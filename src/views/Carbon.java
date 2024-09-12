@@ -5,6 +5,7 @@ import entities.Logement;
 import entities.Transport;
 import entities.User;
 import entities.enums.TypeCarbon;
+import repository.UserRepository;
 import services.CarbonManagement;
 import utils.InputUtils;
 
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.time.temporal.TemporalAdjusters;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 //import static services.UserManagement.users;
 
@@ -25,6 +28,7 @@ public class Carbon {
 
 
     CarbonManagement carbonManagement = new CarbonManagement();
+     UserRepository userRepository = new UserRepository();
 
     private String choiceVehiculeOrEnergieOrAlimentType(String ch1 ,String ch2 , String carbonType) {
         int choice = 0;
@@ -139,19 +143,21 @@ public class Carbon {
 
     public void getUserWithCarbon(Scanner scanner) {
         int id = InputUtils.readInt("Entrez user id  : ");
-        Optional<User> user = carbonManagement.getCarbonByUserId(id);
+        List<User> allUser = userRepository.all();
+        Optional<User> user =  allUser.stream().filter(u -> u.getId()==id).findFirst();
+
 
         if (user.isEmpty()) {
             System.out.println("No user found with this id.");
         } else {
-            User foundUser = user.get();
+            //User foundUser = user.get();
 
             System.out.println("----------------------------------------------------------");
-            System.out.printf("User ID: %d | Name: %s | Age: %d\n",  foundUser.getId(), foundUser.getName(), foundUser.getAge());
+            System.out.printf("User ID: %d | Name: %s | Age: %d\n",  user.get().getId(), user.get().getName(), user.get().getAge());
             System.out.println("----------------------------------------------------------");
 
 
-            List<entities.Carbon> carbons = foundUser.getCarbons();
+            List<entities.Carbon> carbons = user.get().getCarbons();
             if (carbons.isEmpty()) {
                 System.out.println("No carbon consumption records found for this user.");
             } else {
@@ -166,17 +172,82 @@ public class Carbon {
                         Alimentation alimentation = (Alimentation) carbon;
                         String typeAlimentation = alimentation.getTypeAliment();
                         double poids = alimentation.getPoids();
-                        System.out.printf("Alimentation: Type Aliment: %s | Poids: %.2f\n", typeAlimentation, poids);
+                        System.out.printf("Alimentation: Type Aliment: %s | Poids: %.2f    ", typeAlimentation, poids);
+                        System.out.println("   ||  impact :: " + alimentation.calculerImpact());
                     } else if (carbon instanceof Logement) {
                         Logement logement = (Logement) carbon;
                         double consommationEnergie = logement.getConsommationEnergie();
                         String typeEnergie = logement.getTypeEnergie();
-                        System.out.printf("Logement: Consommation Energie: %.2f | Type Energie: %s\n", consommationEnergie, typeEnergie);
+                        System.out.printf("Logement: Consommation Energie: %.2f | Type Energie: %s  ", consommationEnergie, typeEnergie);
+                        System.out.println("   ||  impact :: " + logement.calculerImpact());
+
                     } else if (carbon instanceof Transport) {
                         Transport transport = (Transport) carbon;
                         double distance = transport.getDistanceParcourue();
                         String typeVehicule = transport.getTypeDeVehicule();
-                        System.out.printf("Transport: Distance Parcourue: %.2f | Type de Vehicule: %s\n", distance, typeVehicule);
+                        System.out.printf("Transport: Distance Parcourue: %.2f | Type de Vehicule: %s", distance, typeVehicule);
+                        System.out.println("   ||  impact :: " + transport.calculerImpact());
+
+
+                    }
+                    System.out.println("----------------------------------------------------------");
+                }
+            }
+        }
+    }
+    public void filterUsersByCarbon(Scanner scanner) {
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_RED = "\u001B[31m";
+
+        int number = InputUtils.readInt("Entrez number of consommation   : ");
+        List<User> usersForFilter = userRepository.all();
+        List<User> users = usersForFilter.stream()
+                .filter(user -> user.getCarbons().stream()
+                        .anyMatch(carbon -> carbon.calculerImpact() > number))
+                .collect(Collectors.toList());
+
+        if (users.isEmpty()) {
+            System.out.println("No users found.");
+        } else {
+            System.out.println("Users List:");
+            int lastUserId = -1;
+
+            for (entities.User user : users) {
+                if (lastUserId != user.getId()) {
+                    System.out.println("----------------------------------------------------------");
+                    System.out.printf("User ID: %d | Name: %s | Age: %d\n", user.getId(), user.getName(), user.getAge());
+                    System.out.println("----------------------------------------------------------");
+                    lastUserId = user.getId();
+                }
+
+                for (entities.Carbon carbon : user.getCarbons()) {
+                    String type = "";
+                    System.out.printf("Carbon ID: %d | Quantity: %.2f | Start Date: %s | End Date: %s | Type: %s\n",
+                            carbon.getId(), carbon.getQuantity(), carbon.getStartDate(), carbon.getEndDate(), type);
+                    if (carbon instanceof Alimentation) {
+                        Alimentation alim = (Alimentation) carbon;
+                        type = "ALIMENTATION";
+                        String typeAlimentation = alim.getTypeAliment();
+                        double poids = alim.getPoids();
+                        System.out.printf("Alimentation: Type Aliment: %s | Poids: %.2f ", typeAlimentation, poids);
+                        System.out.println(ANSI_RED + "   ||  impact :: " +  alim.calculerImpact() + ANSI_RESET);
+
+                    } else if (carbon instanceof Logement) {
+                        Logement log = (Logement) carbon;
+                        type = "LOGEMENT";
+                        double consommationEnergie = log.getConsommationEnergie();
+                        String typeEnergie = log.getTypeEnergie();
+                        System.out.printf("Logement: Consommation Energie: %.2f | Type Energie: %s ", consommationEnergie, typeEnergie);
+                        System.out.println(ANSI_RED + "   ||  impact :: " +  log.calculerImpact() + ANSI_RESET);
+
+                    } else if (carbon instanceof Transport) {
+                        Transport trans = (Transport) carbon;
+                        type = "TRANSPORT";
+                        double distance = trans.getDistanceParcourue();
+                        String typeVehicule = trans.getTypeDeVehicule();
+                        System.out.printf("Transport: Distance Parcourue: %.2f | Type de Vehicule: %s ", distance, typeVehicule);
+                        System.out.println(ANSI_RED + "   ||  impact :: " +  trans.calculerImpact() + ANSI_RESET);
+
                     }
                     System.out.println("----------------------------------------------------------");
                 }

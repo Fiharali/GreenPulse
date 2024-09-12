@@ -75,9 +75,7 @@ public class UserRepository {
                             carbonAnyInstance = new Transport(carbonId, quantity, startDate, endDate, distanceParcourue, typeVehicule);
                             break;
                     }
-                    System.out.println(user.getId());
-                    System.out.println(carbonUserId);
-                    System.out.println("////////////////////");
+
 
                     if (carbonAnyInstance != null && !user.hasCarbon(carbonId) && user.getId() == carbonUserId) {
                         user.addCarbon(carbonAnyInstance);
@@ -211,7 +209,28 @@ public class UserRepository {
     }
 
 
-
+//    public List<Optional<User>> all() {
+//        List<Optional<User>> users = new ArrayList<>();
+//        try {
+//            conn = DBConnection.getInstance().getConnection();
+//            String selectSQL = "SELECT u.id , u.name, u.age from users u";
+//            stmt = conn.prepareStatement(selectSQL);
+//            rs = stmt.executeQuery();
+//
+//            while (rs.next()) {
+//                int userId = rs.getInt("id");
+//                String userName = rs.getString("name");
+//                int userAge = rs.getInt("age");
+//                Optional<User> user = carbonRepository.find(userId);
+//                users.add(user);
+//
+//            }
+//
+//            return users;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 }
 

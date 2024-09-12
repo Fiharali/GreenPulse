@@ -2,6 +2,7 @@ package entities;
 
 
 import entities.enums.TypeCarbon;
+import org.w3c.dom.ls.LSOutput;
 
 import java.time.LocalDate;
 
@@ -41,6 +42,7 @@ public class Logement extends Carbon {
         double impactFactor = typeEnergie.equalsIgnoreCase("électricité") ? 1.5 : 2.0;
         return consommationEnergie * impactFactor;
     }
+
 
 
     public String toString() {
