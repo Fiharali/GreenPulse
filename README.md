@@ -1,3 +1,7 @@
+[Jira Project Board](https://alifiharr.atlassian.net/jira/software/projects/BIB/boards/5)
+
+
+
 # Contexte du projet
 
 Dans un contexte où la sensibilisation à l'impact environnemental des activités humaines prend de plus en plus d'importance, le suivi et la gestion de la consommation de carbone deviennent cruciaux. Ce projet vise à développer une application console en Java qui permet aux utilisateurs de mesurer et de surveiller leur empreinte carbone, tout en leur fournissant des outils d'analyse pour mieux comprendre leurs habitudes de consommation et les inciter à adopter des comportements plus respectueux de l'environnement.
